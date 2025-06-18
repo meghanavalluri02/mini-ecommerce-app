@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Place Order</title>
+</head>
+<body>
+  <h2>Place Order</h2>
+  <form id="orderForm">
+    Product ID: <input type="number" name="product_id" required><br><br>
+    Quantity: <input type="number" name="quantity" required><br><br>
+    <button type="submit">Order</button>
+  </form>
+
+  <script>
+    document.getElementById('orderForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const res = await fetch('http://<EKS-ALB-URL>/orders', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          product_id: form.product_id.value,
+          quantity: form.quantity.value
+        })
+      });
+      alert(await res.text());
+    };
+  </script>
+</body>
+</html>
