@@ -36,7 +36,7 @@ spec:
     - port: 80
       targetPort: 5001
   type: ClusterIP
-  ---
+---
 # Frontend Service - Exposed to Internet
 apiVersion: v1
 kind: Service
@@ -47,6 +47,6 @@ spec:
     app: frontend
   ports:
     - port: 80
-      targetPort: 3000
+      targetPort: 80
   type: LoadBalancer
 
