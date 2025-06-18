@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: your-dockerhub-username/product-service:latest
+          image: 156041402660.dkr.ecr.us-east-1.amazonaws.com/product-service
           ports:
             - containerPort: 5000
           env:
