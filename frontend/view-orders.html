@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Orders</title>
+</head>
+<body>
+  <h2>Order List</h2>
+  <ul id="orderList"></ul>
+
+  <script>
+    fetch('http://<EKS-ALB-URL>/orders')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('orderList');
+        data.forEach(order => {
+          const item = document.createElement('li');
+          item.textContent = `Product: ${order.name} | Qty: ${order.quantity} | ₹${order.price}`;
+          list.appendChild(item);
+        });
+      });
+  </script>
+</body>
+</html>
