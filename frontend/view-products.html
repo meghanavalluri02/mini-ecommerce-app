@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Products</title>
+</head>
+<body>
+  <h2>Product List</h2>
+  <ul id="productList"></ul>
+
+  <script>
+    fetch('http://<EKS-ALB-URL>/products')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('productList');
+        data.forEach(product => {
+          const item = document.createElement('li');
+          item.textContent = `${product.name} - ₹${product.price}`;
+          list.appendChild(item);
+        });
+      });
+  </script>
+</body>
+</html>
