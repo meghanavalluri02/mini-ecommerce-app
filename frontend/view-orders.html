@@ -69,7 +69,7 @@
 
   <script>
     async function fetchOrders() {
-      const response = await fetch('http://adb184bf6d65840f6bcee0949c2f21cc-1153305932.us-east-1.elb.amazonaws.com/orders');
+      const response = await fetch('http://adb184bf6d65840f6bcee0949c2f21cc-325226064.us-east-1.elb.amazonaws.com/orders');
       const orders = await response.json();
       const tbody = document.querySelector('#ordersTable tbody');
 
