@@ -81,7 +81,7 @@
 
   <script>
     async function loadProducts() {
-      const response = await fetch('/products');
+      const response = await fetch('http://a8df06ff341394628b5eba4b6c95e18e-1507910371.us-east-1.elb.amazonaws.com/products');
       const products = await response.json();
       const select = document.getElementById('product');
 
@@ -98,7 +98,7 @@
       const product_id = document.getElementById('product').value;
       const quantity = document.getElementById('quantity').value;
 
-      const response = await fetch('/orders', {
+      const response = await fetch('http://adb184bf6d65840f6bcee0949c2f21cc-1153305932.us-east-1.elb.amazonaws.com/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ product_id, quantity })

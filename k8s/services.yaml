@@ -22,7 +22,7 @@ spec:
   ports:
     - port: 80
       targetPort: 5000
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # Order Service
 apiVersion: v1
@@ -35,7 +35,7 @@ spec:
   ports:
     - port: 80
       targetPort: 5001
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # Frontend Service - Exposed to Internet
 apiVersion: v1
