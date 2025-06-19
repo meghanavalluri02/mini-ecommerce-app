@@ -1,30 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Add Product</title>
+  <style>
+    body {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    form {
+      background-color: #2a2a2a;
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 250px;
+      border-radius: 5px;
+      border: none;
+      background-color: #3a3a3a;
+      color: white;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background-color: #666;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #fff;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-weight: bold;
+      color: lightgreen;
+    }
+  </style>
 </head>
 <body>
-  <h2>Add Product</h2>
+  <h1>➕ Add New Product</h1>
   <form id="productForm">
-    Name: <input type="text" name="name" required><br><br>
-    Price: <input type="number" step="0.01" name="price" required><br><br>
-    <button type="submit">Add</button>
+    <input type="text" id="name" placeholder="Product Name" required /><br />
+    <input type="number" id="price" placeholder="Price" required /><br />
+    <button type="submit">Add Product</button>
   </form>
 
+  <div class="message" id="message"></div>
+
+  <a class="back-link" href="index.html">⬅️ Back to Home</a>
+
   <script>
-    document.getElementById('productForm').onsubmit = async function(e) {
+    document.getElementById('productForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const form = e.target;
-      const res = await fetch('http://<EKS-ALB-URL>/products', {
+
+      const name = document.getElementById('name').value;
+      const price = document.getElementById('price').value;
+
+      const response = await fetch('/products', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          name: form.name.value,
-          price: form.price.value
-        })
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, price })
       });
-      alert(await res.text());
-    };
+
+      const result = await response.json();
+      document.getElementById('message').textContent = result.message || '✅ Product added!';
+      document.getElementById('productForm').reset();
+    });
   </script>
 </body>
 </html>

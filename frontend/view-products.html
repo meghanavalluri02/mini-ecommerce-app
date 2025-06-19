@@ -1,23 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>View Products</title>
+  <style>
+    body {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 80%;
+      background-color: #2a2a2a;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #444;
+    }
+
+    th {
+      background-color: #333;
+      color: #fff;
+    }
+
+    tr:hover {
+      background-color: #3a3a3a;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-  <h2>Product List</h2>
-  <ul id="productList"></ul>
+  <h1>📦 All Products</h1>
+  <table id="productsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price ($)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Filled by JS -->
+    </tbody>
+  </table>
+
+  <a class="back-link" href="index.html">⬅️ Back to Home</a>
 
   <script>
-    fetch('http://<EKS-ALB-URL>/products')
-      .then(res => res.json())
-      .then(data => {
-        const list = document.getElementById('productList');
-        data.forEach(product => {
-          const item = document.createElement('li');
-          item.textContent = `${product.name} - ₹${product.price}`;
-          list.appendChild(item);
-        });
+    async function fetchProducts() {
+      const response = await fetch('/products');
+      const products = await response.json();
+      const tbody = document.querySelector('#productsTable tbody');
+
+      if (!products.length) {
+        const row = document.createElement('tr');
+        row.innerHTML = '<td colspan="3">No products available</td>';
+        tbody.appendChild(row);
+        return;
+      }
+
+      products.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${product.id}</td>
+          <td>${product.name}</td>
+          <td>$${product.price}</td>
+        `;
+        tbody.appendChild(row);
       });
+    }
+
+    fetchProducts();
   </script>
 </body>
 </html>
